@@ -1,3 +1,5 @@
+import numpy as np
+
 def gen_uform_grid(N,x_start,x_end,y_start,y_end):
     """Generates grid of points for streamline calculations
     

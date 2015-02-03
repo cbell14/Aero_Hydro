@@ -41,8 +41,8 @@ def uniform_flow(u_inf, alpha, N, X, Y):
     psi = u_inf * ((Y*np.cos(alpha)) - (X*np.sin(alpha)))
 
     # computes the freestream velocity field
-    u = u_inf * (np.cos((alpha * np.ones((N, N), dtype=float))))  #dpsi/dy
-    v = u_inf * (np.sin((alpha * np.ones((N, N), dtype=float)))) #-dpsi/dx
+    u = u_inf * (np.cos((alpha + np.zeros((N, N), dtype=float))))  #dpsi/dy
+    v = u_inf * (np.sin((alpha + np.zeros((N, N), dtype=float)))) #-dpsi/dx
     return u, v, psi
 
 def vel_source_sink(strength, xs, ys, X, Y):

@@ -73,8 +73,8 @@ def vel_uniform_flow(u_inf, N, X, Y):
     """
 
     # computes the freestream velocity field
-    u = u_inf * numpy.ones((N, N), dtype=float)
-    v = numpy.zeros((N, N), dtype=float)
+    u = u_inf * np.ones((N, N), dtype=float)
+    v = np.zeros((N, N), dtype=float)
     return u, v
 
 def sf_uniform_flow(u_inf, X, Y):

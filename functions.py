@@ -22,7 +22,7 @@ def gen_uform_grid(N, x_s, x_e, y_s, y_e):
     
     return X, Y
 
-def vel_uniform_flow(u_inf, alpha, N, X, Y):
+def vel_uniform_flow_alpha(u_inf, alpha, N, X, Y):
     """Generates uniform cartesian flow velocity field
     
     Params:
@@ -41,7 +41,7 @@ def vel_uniform_flow(u_inf, alpha, N, X, Y):
     v = u_inf * (np.sin((alpha + np.zeros((N, N), dtype=float)))) #-d(psi)/dx
     return u, v
 
-def sf_uniform_flow(u_inf, alpha, X, Y):
+def sf_uniform_flow_alpha(u_inf, alpha, X, Y):
     """Generates uniform cartesian flow stream-function
     
     Params:
@@ -56,6 +56,41 @@ def sf_uniform_flow(u_inf, alpha, X, Y):
 
     # computes the stream-function
     psi = u_inf * ((Y*np.cos(alpha)) - (X*np.sin(alpha)))
+
+    return psi
+    
+def vel_uniform_flow(u_inf, N, X, Y):
+    """Generates uniform cartesian flow velocity field
+    
+    Params:
+    ------
+    u_inf    float, free stream speed
+    N        float, number of points
+
+    Returns:
+    -------
+    u,v      1D array of float, x and y velocities
+    """
+
+    # computes the freestream velocity field
+    u = u_inf * numpy.ones((N, N), dtype=float)
+    v = numpy.zeros((N, N), dtype=float)
+    return u, v
+
+def sf_uniform_flow(u_inf, X, Y):
+    """Generates uniform cartesian flow stream-function
+    
+    Params:
+    ------
+    u_inf    float, free stream speed
+
+    Returns:
+    -------
+    psi      2D array of float, streamfunction
+    """
+
+    # computes the stream-function
+    psi = u_inf * Y
 
     return psi
 

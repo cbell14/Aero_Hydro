@@ -6,15 +6,13 @@ def gen_uform_grid(N, x_s, x_e, y_s, y_e):
     
     Params:
     -------
-    N:     float, number of points in each direction
-    x_s:   1D array of float, starting point of x
-    x_e:   1D array of float, ending point of x
-    y_s:   1D array of float, starting point of y
-    y_e:   1D array of float, ending point of y
+    N          float, number of points in each direction
+    x_s, y_s   float, starting point of x and y
+    x_e, y_e   float, ending point of x and y
     
     Returns:
     -------
-    X,Y    2D array of float, meshgrid
+    X,Y        2D array of float, meshgrid
     """
     x = np.linspace(x_s,x_e,N) #1-D array for x
     y = np.linspace(y_s,y_e,N) #1-D array for y
@@ -30,10 +28,11 @@ def vel_uniform_flow_alpha(u_inf, alpha, N, X, Y):
     u_inf    float, free stream speed
     alpha    float, angle of attack
     N        float, number of points
+    X,Y      2D array of float, meshgrid
 
     Returns:
     -------
-    u,v      1D array of float, x and y velocities
+    u,v      2D array of float, x and y velocities
     """
 
     # computes the freestream velocity field
@@ -48,6 +47,7 @@ def sf_uniform_flow_alpha(u_inf, alpha, X, Y):
     ------
     u_inf    float, free stream speed
     alpha    float, angle of attack
+    X,Y      2D array of float, meshgrid
 
     Returns:
     -------
@@ -66,10 +66,11 @@ def vel_uniform_flow(u_inf, N, X, Y):
     ------
     u_inf    float, free stream speed
     N        float, number of points
+    X,Y      2D array of float, meshgrid
 
     Returns:
     -------
-    u,v      1D array of float, x and y velocities
+    u,v      2D array of float, x and y velocities
     """
 
     # computes the freestream velocity field
@@ -83,6 +84,7 @@ def sf_uniform_flow(u_inf, X, Y):
     Params:
     ------
     u_inf    float, free stream speed
+    X,Y      2D array of float, meshgrid
 
     Returns:
     -------
@@ -100,12 +102,12 @@ def vel_source_sink(strength, xs, ys, X, Y):
     Params:
     ------
     strength  float, strength of the source/sink
-    xs, ys    1D array of float, coordinates of the source/sink
-    X, Y      1D array of float, mesh grid
+    xs, ys    float, coordinates of the source/sink
+    X, Y      2D array of float, mesh grid
 
     Returns:
     -------
-    u, v      1D array of float, x and y velocities
+    u, v      2D array of float, x and y velocities
     """
     u = strength/(2*np.pi)*(X-xs)/((X-xs)**2+(Y-ys)**2)
     v = strength/(2*np.pi)*(Y-ys)/((X-xs)**2+(Y-ys)**2)
@@ -118,8 +120,8 @@ def sf_source_sink(strength, xs, ys, X, Y):
     Params
     ------
     strength   float, strength of the source/sink
-    xs, ys     1D array of float, coordinates of the source/sink
-    X, Y       1D array of float, mesh grid
+    xs, ys     float, coordinates of the source/sink
+    X, Y       2D array of float, mesh grid
 
     Returns
     -------
@@ -135,12 +137,12 @@ def vel_doublet(strength, xd, yd, X, Y):
     Params:
     ---------
     strength    float, strength of the doublet
-    xd, yd      1D array of float, coordinates of the doublet
-    X, Y        1D array of float, mesh grid
+    xd, yd      float, coordinates of the doublet
+    X, Y        2D array of float, mesh grid
 
     Returns:
     -------
-    u, v        1D array of float, x and y velocities
+    u, v        2D array of float, x and y velocities
     """
     u = - strength/(2*math.pi)*((X-xd)**2-(Y-yd)**2)/((X-xd)**2+(Y-yd)**2)**2
     v = - strength/(2*math.pi)*2*(X-xd)*(Y-yd)/((X-xd)**2+(Y-yd)**2)**2
@@ -153,8 +155,8 @@ def sf_doublet(strength, xd, yd, X, Y):
     Params
     ---------
     strength    float, strength of the doublet
-    xd, yd      1D array of float, coordinates of the doublet
-    X, Y        1D array of float, mesh grid
+    xd, yd      float, coordinates of the doublet
+    X, Y        2D array of float, mesh grid
 
     Returns
     -------
@@ -170,12 +172,12 @@ def vel_vortex(strength, xv, yv, X, Y):
     Params:
     ------
     strength   float, strength of vortex
-    xv, yv   1D array of float, vortex coordinates
-    X, Y       1D array of float, meshgrid
+    xv, yv     float, vortex coordinates
+    X, Y       2D array of float, meshgrid
     
     Returns
     -------
-    u,v         1D array of float, x and y velocities
+    u,v        2D array of float, x and y velocities
     """
 
     u = + strength/(2*math.pi)*(Y-yv)/((X-xv)**2+(Y-yv)**2)
@@ -189,8 +191,8 @@ def sf_vortex(strength, xv, yv, X, Y):
     Params:
     ------
     strength   float, strength of vortex
-    x_v, y_v   1D array of float, vortex coordinates
-    X, Y       1D array of float, meshgrid
+    x_v, y_v   float, vortex coordinates
+    X, Y       2D array of float, meshgrid
     
     Returns
     -------
@@ -210,7 +212,7 @@ def vel_doublet_cylind(strength, xd, yd, X, Y):
     
     Returns
     --------
-    v_r, v_theta 1D array of float, r and theta velocities
+    v_r, v_theta 2D array of float, r and theta velocities
     """
     r = np.sqrt((X - xd)**2 + (Y - yd)**2)
     theta = np.arctan(Y/X)
@@ -246,14 +248,14 @@ def vel_uniform_flow_cylind(u_inf, xd, yd, alpha, N, X, Y):
     Params:
     ------
     u_inf        float, free stream speed
+    xd, yd       float, coordinates of the doublet.
     alpha        float, angle of attack
     N            float, number of points
     X, Y         2D array of float, mesh grid.
-    xd, yd       float, coordinates of the doublet.
-
+    
     Returns
     -------
-    v_r, v_theta 1D array of float, r and theta velocities
+    v_r, v_theta 2D array of float, r and theta velocities
     """
 
     r = np.sqrt((X - xd)**2 + (Y - yd)**2)
@@ -271,9 +273,9 @@ def sf_uniform_flow_cylind(u_inf, xd, yd, alpha, X, Y):
     Params:
     ------
     u_inf    float, free stream speed
+    xd, yd   float, coordinates of the doublet
     alpha    float, angle of attack
-    X, Y     2D array of float, mesh grid.
-    xd, yd    float, coordinates of the doublet.
+    X, Y     2D array of float, mesh grid
 
     Returns
     -------
@@ -286,3 +288,54 @@ def sf_uniform_flow_cylind(u_inf, xd, yd, alpha, X, Y):
                    - ((r*np.cos(theta))*np.sin(alpha)))
     
     return psi
+    
+def vel_combined_source_sink(strength, xs, ys, X, Y, N):
+    """Calculates the velocities for several combined
+    sources or sinks
+    
+    Params:
+    ------
+    strength   float, strength of sources/sinks
+    xs, ys     float, coordinates of the sources/sinks
+    X, Y       2D array of float, mesh grid
+    N          float, number of points
+    
+    Returns:
+    -------
+    u_all, v_all      2D arrays of float, x and y velocities
+    """
+    
+    #u_s, v_s = np.zeros((N,N)), np.zeros((N,N))
+    u_all, v_all = np.zeros((N,N)), np.zeros((N,N))
+    
+    for i in range(0,len(source_strength)):
+        u_s, v_s = vel_source_sink(strength[i], xs[i], ys[i], X, Y)
+        u_all += u_s
+        v_all += v_s
+        
+    return u_all, v_all
+    
+def sf_combined_source_sink(strength, xs, ys, X, Y, N):
+    """Calculates the stream functions for several combined
+    sources or sinks
+    
+    Params:
+    ------
+    strength   float, strength of sources/sinks
+    xs, ys     float, coordinates of the sources/sinks
+    X, Y       2D array of float, mesh grid
+    N          float, number of points
+    
+    Returns:
+    -------
+    psi_s        2D array of float, streamfunction
+    """
+    
+    #psi_s = np.zeros((N,N))
+    psi_all = np.zeros((N,N))
+    
+    for i in range(0,len(source_strength)):
+        psi_s = sf_source_sink(strength[i], xs[i], ys[i], X, Y)
+        psi_all += psi_s
+        
+    return psi_all

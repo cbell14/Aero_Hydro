@@ -1,6 +1,148 @@
 import numpy as np
 import math
 
+class Source:
+    """contains information about sources or sinks"""
+    def __init__(self, strength, x, y):
+        """Initialize the source or sink
+
+        Params:
+        -------
+        strength  float, strength of the source or sink
+        x, y      float, cartesian locations of the source or sink
+        """
+
+        self.strength = strength
+        self.x, self.y = x, y
+
+    def velocity(self, X, Y):
+        """Computes the cartesian velocity field produced by a source or
+        sink
+
+        Params:
+        -------
+        X, Y     2D array of float, meshgrid
+        """
+
+        self.u = (self.strength/(2.0*np.pi)) * (X-self.x) / ((X-self.x)**2 + (Y-y.self)**2)
+        self.v = (self.strength/(2.0*np.pi)) * (Y-self.y) / ((X-self.x)**2 + (Y-y.self)**2)
+
+    def streamfunction(self, X, Y):
+        """Computes the cartesian streamfunction produced by a source or sink
+
+        Params:
+        ------
+        X, Y     2D array of float, meshgrid
+        """
+
+        self.psi = self.strength/(2.0*np.pi) * np.arctan2((Y-self.y),(X-self.x))
+
+
+class Vortex:
+    """Contains information about a vortex"""
+    def __init__(self, stength, x, y):
+        """Initialize the vortex
+
+        Params:
+        -------
+        stength  float, strength of the vortex
+        x, y     float, cartesian locations of the source or sink
+        """
+
+        self.strength = strength
+        self.x, self.y = x, y
+
+    def velocity(self, X, Y):
+        """Computes the cartesian velocity field created by a vortex
+
+        Params:
+        -------
+        X, Y     2D array of float, meshgrid
+        """
+
+        self.u = self.strength/(2.0*np.pi) * (Y-self.y) / ((X-self.x)**2 + (Y-self.y)**2)
+        self.v = -self.strength/(2.0*np.pi) * (X-self.x) / ((X-self.x)**2 + (Y-self.y)**2)
+
+    def streamfunction(self, X, Y):
+        """Computes the cartesian streamfunction created by a vortex
+
+        Params:
+        -------
+        X, Y     2D array of float, meshgrid
+        """
+
+        self.psi = -self.strength/(4.0*np.pi) * np.log((X-self.x)**2 + (Y-self.y)**2)
+
+
+class Doublet:
+    """Contains information about a doublet"""
+    def __init__(self, strength, x, y):
+        """Initialize the doublet
+
+        Params:
+        -------
+        strength  float, strength of the doublet
+        x, y      float, cartesian locations of the doublet
+        """
+
+        self.strength = strength
+        self.x, self.y = x, y
+
+    def velocity(self, X, Y):
+        """Computes the cartesian velocity field created by a doublet
+
+        Params:
+        ------
+        X, Y     2D array of float, meshgrid
+        """
+
+        self.u = -self.strength/(2.0*np.pi) * ((X-self.x)**2 - (Y-self.y)**2)\
+            /((X-self.x)**2 + (Y-self.y)**2)**2
+        self.v = -self.strength/(2.0*np.pi) * (2.0 * (X-self.x)*(Y-self.y))\
+            /((X-self.x)**2 + (Y-self.y)**2)**2
+
+    def streamfunction(self, X, Y):
+        """Computes the cartesian streamfunction created by a doublet
+
+        Params:
+        ------
+        X, Y    2D array of float, meshgrid
+        """
+
+        self.psi = -self.strength/(2.0*np.pi) * (Y-self.y)/((X-self.x)**2 + (Y-self.y)**2)
+
+class UniformFlow:
+    """Contains information about uniform flow"""
+    def __init__(self, u_inf, alpha, N, X, Y):
+        """initialize the uniform flow
+
+        Params:
+        -------
+        u_inf    float, freestream speed
+        alpha    float, angle of attack
+        N        float, number of points
+        X, Y     2D array of float, meshgrid
+        """
+
+        self.u_inf = u_inf
+        self.alpha = alpha
+        self.N = N
+        self.X, self.Y = X, Y
+
+    def velocity(self):
+        """Computes the uniform cartesian velocity field"""
+
+        self.u = self.u_inf * (np.cos((self.alpha + np.zeros((self.N,self.N), dtype=float))))
+        self.v = self.u_inf * (np.sin((self.alpha + np.zeros((self.N,self.N), dtype=float))))
+
+    def streamfunction(self):
+        """Computes the uniform cartesian streamfunction"""
+
+        self.psi = self.u_inf * ((self.Y*np.cos(self.alpha)) - (self.X*np.sin(self.alpha)))
+
+
+
+
 def gen_uform_grid(N, x_s, x_e, y_s, y_e):
     """Generates uniform cartesian grid of points for streamline calculations
     

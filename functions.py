@@ -16,31 +16,34 @@ class Source:
         self.x, self.y = x, y
 
     def velocity(self, X, Y):
-        """Computes the cartesian velocity field produced by a source or
-        sink
+        """Computes the cartesian velocity field produced by
+        a source or sink
 
         Params:
         -------
         X, Y     2D array of float, meshgrid
         """
 
-        self.u = (self.strength/(2.0*np.pi)) * (X-self.x) / ((X-self.x)**2 + (Y-y.self)**2)
-        self.v = (self.strength/(2.0*np.pi)) * (Y-self.y) / ((X-self.x)**2 + (Y-y.self)**2)
+        self.u = (self.strength/(2.0*math.pi)) * (X-self.x) /\
+            ((X-self.x)**2 + (Y-self.y)**2)
+        self.v = (self.strength/(2.0*math.pi)) * (Y-self.y) /\
+            ((X-self.x)**2 + (Y-self.y)**2)
 
     def streamfunction(self, X, Y):
-        """Computes the cartesian streamfunction produced by a source or sink
+        """Computes the cartesian streamfunction produced by a
+        source or sink
 
         Params:
         ------
         X, Y     2D array of float, meshgrid
         """
 
-        self.psi = self.strength/(2.0*np.pi) * np.arctan2((Y-self.y),(X-self.x))
-
-
+        self.psi = self.strength/(2.0*math.pi) * np.arctan2\
+            ((Y-self.y),(X-self.x))
+            
 class Vortex:
     """Contains information about a vortex"""
-    def __init__(self, stength, x, y):
+    def __init__(self, strength, x, y):
         """Initialize the vortex
 
         Params:
@@ -60,8 +63,8 @@ class Vortex:
         X, Y     2D array of float, meshgrid
         """
 
-        self.u = self.strength/(2.0*np.pi) * (Y-self.y) / ((X-self.x)**2 + (Y-self.y)**2)
-        self.v = -self.strength/(2.0*np.pi) * (X-self.x) / ((X-self.x)**2 + (Y-self.y)**2)
+        self.u = +self.strength/(2.0*math.pi) * (Y-self.y) / ((X-self.x)**2 + (Y-self.y)**2)
+        self.v = -self.strength/(2.0*math.pi) * (X-self.x) / ((X-self.x)**2 + (Y-self.y)**2)
 
     def streamfunction(self, X, Y):
         """Computes the cartesian streamfunction created by a vortex
@@ -71,9 +74,8 @@ class Vortex:
         X, Y     2D array of float, meshgrid
         """
 
-        self.psi = -self.strength/(4.0*np.pi) * np.log((X-self.x)**2 + (Y-self.y)**2)
-
-
+        self.psi = -self.strength/(4.0*math.pi) * np.log((X-self.x)**2 + (Y-self.y)**2)
+        
 class Doublet:
     """Contains information about a doublet"""
     def __init__(self, strength, x, y):
@@ -89,27 +91,31 @@ class Doublet:
         self.x, self.y = x, y
 
     def velocity(self, X, Y):
-        """Computes the cartesian velocity field created by a doublet
+        """Computes the cartesian velocity field created by a
+        doublet
 
         Params:
         ------
         X, Y     2D array of float, meshgrid
         """
 
-        self.u = -self.strength/(2.0*np.pi) * ((X-self.x)**2 - (Y-self.y)**2)\
-            /((X-self.x)**2 + (Y-self.y)**2)**2
-        self.v = -self.strength/(2.0*np.pi) * (2.0 * (X-self.x)*(Y-self.y))\
-            /((X-self.x)**2 + (Y-self.y)**2)**2
+        self.u = -self.strength/(2.0*math.pi) * ((X-self.x)**2\
+            - (Y-self.y)**2)/((X-self.x)**2 + (Y-self.y)**2)**2
+        self.v = -self.strength/(2.0*math.pi) * (2.0 * (X-self.x)\
+            *(Y-self.y))/((X-self.x)**2 + (Y-self.y)**2)**2
 
     def streamfunction(self, X, Y):
-        """Computes the cartesian streamfunction created by a doublet
+        """Computes the cartesian streamfunction created by a
+        doublet
 
         Params:
         ------
         X, Y    2D array of float, meshgrid
         """
 
-        self.psi = -self.strength/(2.0*np.pi) * (Y-self.y)/((X-self.x)**2 + (Y-self.y)**2)
+        self.psi = -self.strength/(2.0*math.pi) * (Y-self.y)\
+            /((X-self.x)**2 + (Y-self.y)**2)
+            
 
 class UniformFlow:
     """Contains information about uniform flow"""

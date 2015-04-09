@@ -1,4 +1,13 @@
+# IPython 1.0 creates intermediate checkpoints
+*.ipynb_checkpoints
+
+#ignoring GIMP image edit files
+*.xcf
+
+#ignoring compiled python files
 *.pyc
+
+#ignoring backup gedit files
 *.*~
 
 # Windows image file caches
